@@ -4,17 +4,45 @@ from idna import unicode
 from newsapi import NewsApiClient
 import json
 import randfacts
+import requests
+from random_word import RandomWords
 
-
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 @app.route('/')
 def index():    
-    return render_template("index.html", newsstr = getNews(), fact = getFact())
+    return render_template("index.html", newsstr = getNews(), fact = getFact(), country = "", word = getWord())
 
 def getFact():
-    rfact = randfacts.getFact()
+    rfact = [randfacts.getFact(),randfacts.getFact(),randfacts.getFact()]
+    
     return rfact
+
+def getSurf():
+    response = requests.get("http://magicseaweed.com/api/YOURAPIKEY/forecast/?spot_id=10&units=eu")
+    return response.json()
+
+class Word:
+    def __init__(self, w, t):
+        self.word = w
+        self.text = t    
+
+def getWord():
+    r = RandomWords()
+    
+    rw = r.get_random_word()
+    wd = r.word_of_the_day()
+    wordtxt = ''
+    deftxt = ''
+    for items in wd:
+        if(items == 'word'):
+            wordtxt=items['word']
+            for items in 'definations':
+                if(items == 'text'):
+                    deftxt += items['text']
+                
+    Word(wordtxt,deftxt)
+    return Word(wordtxt,deftxt)
 
 class NewsStory:
     def __init__(self, t, c):
@@ -45,7 +73,9 @@ def getNews():
 
     return techList , irishList
 
-
+def getCountry():
+    response = requests.get("https://restcountries.eu/rest/v2/region/asia")
+    return response.json()
 
 
 if __name__ == "__main__":

@@ -6,42 +6,108 @@
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<style>
+/*@font-face {
+  font-family: DS-Font;
+  src: {{ url_for('static' , filename='DS-DIGIB.woff') }};
+}*/
 
+    @font-face {
+    font-family: 'DS-Digital Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('DS-Digital Bold'), url('DS-DIGIB.woff') format('woff');
+    }
+
+#txtTime{
+  font-family: DS-Digital Normal;
+  color: #ff0000;
+  background-color: #000000
+}
+body{
+    margin: 20px;
+    color: #000000;
+    background-color: #b1abf7;
+    text-align: center;
+}
+.content-box{    
+    padding: 10px;
+    margin:5px;
+    background-color: #ededed;
+
+}
+</style>
+
+<script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
+<script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '2961423',appid: 'd64cf9c8d8148b916b91265063c9005b',units: 'metric',containerid: 'openweathermap-widget-11',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
 </head>
 <body onload="start()">
 
-    <div class"container">
-        <div class="row">
+    <div class="row">            
+            
             <div class="col-sm-4">
-                <h1 id="txtTime"></h1>
-                <canvas id="canvas" width="200" height="200" style="background-color:#ff0000"></canvas>
-            </div>
-            <div class="col-sm-4">
-                <div class="container">
-                <h3>{{ fact }}</h3>
+                <div class="border content-box">
+                    <h2 id="txtDay"></h2>
+                    <h1 id="txtDate"></h1>
+                    <h1 id="txtTime"></h1>
+                    <div id="timeAlert">
+                        <h3 id="txtDiff"></h3>
+                    </div>
+                    <canvas id="canvas" width="200" height="200" style="background-color:#ededed"></canvas>
                 </div>
             </div>
-        </div>
+            <div  class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="openweathermap-widget-11"></div>
+                </div>
+                <div class="row">
+                <div class="col-sm-6">
+                    <div class="border content-box">
+                        <h3>{{ fact[0] }}</h3>
+                    </div>
+                </div>
+            
+                <div class="col-sm-6">
+                    <div class="border content-box">
+                        <h3>{{ word.word }}</h3>
+                        <p>{{ word.text }}</p>
+                       
+                    </div>
+                </div>
+                
+            
+                
+                </div>
+                </div>
+            </div>
+            
+           
     
     <div class="row">
-        <div class="col-sm-6">
-        <div class"container">
-        <h4>Tech News Headlines</h4>        
+        <div class="col-sm-6"> 
+        <div class="border content-box">
+        <h4>Tech News Headlines</h4>  
+        <div class="row">
         {% for item in newsstr[0] %}
+            <div class="col-md-6">
             <h5>{{ item.title }}</h5>
             <p>{{ item.content }}</p>
-        {% endfor %}
+            </div>
+        {% endfor %}    
+        </div>
         </div>
         </div>
         
         <div class="col-sm-6">
+        <div class="border content-box">
             <h4>Irish News Headlines</h4>
             {% for item in newsstr[1] %}
                 <h5>{{ item.title }}</h5>
                 <p>{{ item.content }}</p>
             {% endfor %}
         </div>
-        
+        </div>
     </div>
 </div>
     
@@ -50,17 +116,66 @@
 <script>
 function start(){
     startTime();    
+    
 }
 
+function animate(){
+    
+}
+
+/*function styleDay(i){
+    if(i == 2){
+        var txt = document.getElementById('txtDay');
+        txt.style.color = "Red";
+    }
+}*/
+
+
 function startTime(){
+
+    var days = [ 'Monday :(' , 'TWO CHICKEN TUESDAY!!' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday' ]; 
+
     var today = new Date();
+    var y = today.getFullYear();
+    var mth = today.getMonth();
+    var d = today.getDate();
     var h = today.getHours();
     var m = today.getMinutes();
     var s = today.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
-    document.getElementById('txtTime').innerHTML = h + ":" + m + ":" + s;
+    document.getElementById('txtTime').innerHTML = h + " : " + m + " : " + s;
+    document.getElementById('txtDate').innerHTML = d + " / " + mth + " / " + y;
+    var daystr = days[(today.getDay() - 1)];
+    document.getElementById('txtDay').innerHTML = daystr;
     var t = setTimeout(startTime,1000);
+    timeDiff(today)
+}
+
+function timeDiff(today){
+    var nextDate = new Date(today.getFullYear(),today.getMonth(), today.getDate(), 16, 20);
+    if (nextDate < today){
+        nextDate.setDate(nextDate.getDate() + 1);
+    }
+    
+    var diff = nextDate - today;
+    var msec = diff;
+    var hh = Math.floor(msec / 1000 / 60 / 60);
+    msec -= hh * 1000 * 60 * 60; 
+    var mm = Math.floor(msec / 1000 / 60);
+    msec -= mm * 1000 * 60;
+    var ss = Math.floor(msec / 1000);
+    msec -= ss * 1000;
+    
+    mm = checkTime(mm);
+    ss = checkTime(ss);
+    
+    if(diff > 600,000)
+    {
+        document.getElementById('timeAlert').classList.add("alert alert-sucess"); 
+    }
+    
+    document.getElementById('txtDiff').innerHTML = hh + " : " + mm + " : " + ss;
     
 }
 
@@ -70,6 +185,20 @@ function checkTime(i){
 
 }
 
+/*var rating = [];
+ 
+// Loop the solid rating on a single forecast object.
+for (var i = 0; i < forecast.solidRating; i++) {
+    rating.push('<img src="http://cdnimages.magicseaweed.com/star_filled.png" />');
+}
+ 
+// Loop the faded rating on a single forecast object.
+for (var i = 0; i < forecast.fadedRating; i++) {
+    rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
+}
+ 
+document.getElementById("ratingContainer").innerHTML = rating.join(" ");
+*/
 
 
 var canvas = document.getElementById("canvas");
