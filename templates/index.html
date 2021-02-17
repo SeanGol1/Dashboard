@@ -37,6 +37,12 @@ body{
 
 }
 
+/* CAROUSEL   */
+
+.carousel-item.active, .carousel-item-next, .carousel-item.-prev{
+    display:block;
+}
+
 /*stickeynotes*/
 #stickynotes {
   margin: 20px auto;
@@ -105,7 +111,9 @@ body{
   margin:1em;
 }
 
-
+#divfact{
+    margin-top:20px;
+}
 </style>
 
 <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
@@ -134,7 +142,7 @@ body{
                 </div>
             
                 <div class="col-sm-8">
-                    <div class="border content-box">
+                    <div id="divfact" class="border content-box">
                         <h2>{{ fact[0] }}</h3>
                     </div>
                 </div>
@@ -148,8 +156,7 @@ body{
                         </li>
                         <li>
                             <a href="#" contenteditable>
-                            <h2 class="h2s">To Do #2</h2>
-                            <p class="ps">ToDo Item Desc</p>    
+                            <h4 class="h2s">Supermac's Code: justsuper</h4> 
                             </a>
                         </li>
                         <li>
@@ -179,13 +186,39 @@ body{
         <div class="col-sm-6"> 
         <div class="border content-box">
         <h4>Tech News Headlines</h4>  
+        
         <div class="row">
-        {% for item in newsstr[0] %}
-            <div class="col-sm-6">
-                <h2 class="newshead">{{ item.title }}</h5>
-                <p>{{ item.content }}</p>
+        
+        
+        <div id="technewscarousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+      <div class="carousel-item active text-center p-4">
+                <h2>Tech News Headlines</h2>                
             </div>
-        {% endfor %}    
+  
+        {% for item in newsstr[0] %}
+            <div class="carousel-item text-center p-4">               
+                <h2 class="newshead">{{ item.title }}</h2>
+                <p>{{ item.content }}</p>                
+            </div>
+        {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+        
+        
         </div>
         </div>
         </div>
@@ -194,12 +227,44 @@ body{
         <div class="border content-box">
             <h4>Irish News Headlines</h4>
             <div class="row">
-            {% for item in newsstr[1] %}
-                <div class="col-sm-6">
-                    <h5>{{ item.title }}</h5>
-                    <p>{{ item.content }}</p>
-                </div>
-            {% endfor %}
+            
+            
+            
+            
+                    <div id="irishnewscarousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+      <div class="carousel-item active">
+                <h2>Irish News Headlines</h2>                
+            </div>
+  
+        {% for item in newsstr[1] %}
+            <div class="carousel-item text-center p-4">               
+                <h2 class="newshead">{{ item.title }}</h2>
+                <p>{{ item.content }}</p>                
+            </div>
+        {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+            
+            
+       
+            
+            
+            
+            
             </div>
         </div>
         </div>
@@ -280,6 +345,10 @@ function checkTime(i){
 
 }
 
+/* CAROUSEL */
+$('.carousel').carousel({
+    interval:20000
+})
 
 /*  STICKY NOTES  */
 

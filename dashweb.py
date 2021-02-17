@@ -7,20 +7,17 @@ import randfacts
 import requests
 from random_word import RandomWords
 
+
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 @app.route('/')
 def index():    
-    return render_template("index.html", newsstr = getNews(), fact = getFact(), country = "", word = getWord())
+    return render_template("index.html", newsstr = getNews(), fact = getFact(), newscount = 0, word = getWord())
 
 def getFact():
     rfact = [randfacts.getFact(),randfacts.getFact(),randfacts.getFact()]
-    
     return rfact
 
-def getSurf():
-    response = requests.get("http://magicseaweed.com/api/YOURAPIKEY/forecast/?spot_id=10&units=eu")
-    return response.json()
 
 class Word:
     def __init__(self, w, t):
