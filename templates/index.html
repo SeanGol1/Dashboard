@@ -27,7 +27,7 @@
 body{
     margin: 20px;
     color: #000000;
-    background-color: #b1abf7;
+    background-color: #666; /*#b1abf7;*/
     text-align: center;
 }
 .content-box{    
@@ -36,10 +36,81 @@ body{
     background-color: #ededed;
 
 }
+
+/*stickeynotes*/
+#stickynotes {
+  margin: 20px auto;
+  font-family: 'Lato';
+  color:#fff;
+}
+
+*{
+  margin:0;
+  padding:0;
+}
+
+.h2s {
+  font-weight: bold;
+}
+.ps {
+  font-family: 'Reenie Beanie';
+}
+#stickynotes,#stickynotes>li{
+  list-style:none;
+}
+#stickynotes{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+#stickynotes li a{
+  text-decoration:none;
+  color:#000;
+  background:#ffc;
+  display:block;
+  height:10em;
+  width:10em;
+  padding:1em;
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  transform: rotate(-6deg);
+  transition: transform .15s linear;
+}
+
+#stickynotes li:nth-child(even) a{
+  transform:rotate(4deg);
+  position:relative;
+  top:5px;
+  background:#cfc;
+}
+#stickynotes li:nth-child(3n) a{
+  transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+  background:#ccf;
+}
+#stickynotes li:nth-child(5n) a{
+  transform:rotate(5deg);
+  position:relative;
+  top:-10px;
+}
+
+#stickynotes li a:hover,ul li a:focus{
+  box-shadow:10px 10px 7px rgba(0,0,0,.7);
+  transform: scale(1.25);
+  position:relative;
+  z-index:5;
+}
+
+#stickynotes li{
+  margin:1em;
+}
+
+
 </style>
 
 <script src='//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/d3.min.js'></script>
-<script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '2961423',appid: 'd64cf9c8d8148b916b91265063c9005b',units: 'metric',containerid: 'openweathermap-widget-11',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
+<!--<script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 11,cityid: '2961423',appid: 'd64cf9c8d8148b916b91265063c9005b',units: 'metric',containerid: 'openweathermap-widget-11',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>-->
+<script>window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];  window.myWidgetParam.push({id: 12,cityid: '2961423',appid: 'd64cf9c8d8148b916b91265063c9005b',units: 'metric',containerid: 'openweathermap-widget-12',  });  (function() {var script = document.createElement('script');script.async = true;script.charset = "utf-8";script.src = "//openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);  })();</script>
 </head>
 <body onload="start()">
 
@@ -56,31 +127,51 @@ body{
                     <canvas id="canvas" width="200" height="200" style="background-color:#ededed"></canvas>
                 </div>
             </div>
-            <div  class="col-sm-8">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="openweathermap-widget-11"></div>
+            <div class="col-sm-8">
+                <div class="row">
+                <div  class="col-sm-4">  
+                    <div id="openweathermap-widget-12"></div>
+                </div>
+            
+                <div class="col-sm-8">
+                    <div class="border content-box">
+                        <h2>{{ fact[0] }}</h3>
+                    </div>
                 </div>
                 <div class="row">
-                <div class="col-sm-6">
-                    <div class="border content-box">
-                        <h3>{{ fact[0] }}</h3>
-                    </div>
-                </div>
-            
-                <div class="col-sm-6">
-                    <div class="border content-box">
-                        <h3>{{ word.word }}</h3>
-                        <p>{{ word.text }}</p>
-                       
-                    </div>
+                    <ul id="stickynotes">
+                        <li>
+                            <a href="#" contenteditable>
+                            <h2 class="h2s">Word of the Day</h2>
+                            <p class="ps">{{  word }}</p>  
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" contenteditable>
+                            <h2 class="h2s">To Do #2</h2>
+                            <p class="ps">ToDo Item Desc</p>    
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" contenteditable>
+                            <h2 class="h2s">To Do #3</h2>
+                            <p class="ps">ToDo Item Desc</p>    
+                            </a>
+                        </li>
+                         <li>
+                            <a href="#" contenteditable>
+                            <h2 class="h2s">To Do #3</h2>
+                            <p class="ps">ToDo Item Desc</p>    
+                            </a>
+                        </li>
+                    </ul>
                 </div>
                 
             
                 
                 </div>
                 </div>
-            </div>
+    </div>
             
            
     
@@ -90,9 +181,9 @@ body{
         <h4>Tech News Headlines</h4>  
         <div class="row">
         {% for item in newsstr[0] %}
-            <div class="col-md-6">
-            <h5>{{ item.title }}</h5>
-            <p>{{ item.content }}</p>
+            <div class="col-sm-6">
+                <h2 class="newshead">{{ item.title }}</h5>
+                <p>{{ item.content }}</p>
             </div>
         {% endfor %}    
         </div>
@@ -102,10 +193,14 @@ body{
         <div class="col-sm-6">
         <div class="border content-box">
             <h4>Irish News Headlines</h4>
+            <div class="row">
             {% for item in newsstr[1] %}
-                <h5>{{ item.title }}</h5>
-                <p>{{ item.content }}</p>
+                <div class="col-sm-6">
+                    <h5>{{ item.title }}</h5>
+                    <p>{{ item.content }}</p>
+                </div>
             {% endfor %}
+            </div>
         </div>
         </div>
     </div>
@@ -185,22 +280,40 @@ function checkTime(i){
 
 }
 
-/*var rating = [];
- 
-// Loop the solid rating on a single forecast object.
-for (var i = 0; i < forecast.solidRating; i++) {
-    rating.push('<img src="http://cdnimages.magicseaweed.com/star_filled.png" />');
-}
- 
-// Loop the faded rating on a single forecast object.
-for (var i = 0; i < forecast.fadedRating; i++) {
-    rating.push('<img src="http://cdnimages.magicseaweed.com/star_empty.png" />');
-}
- 
-document.getElementById("ratingContainer").innerHTML = rating.join(" ");
-*/
 
+/*  STICKY NOTES  */
 
+$(document).ready(function () {
+  all_notes = $("li a");
+
+  all_notes.on("keyup", function () {
+    note_title = $(this).find("h2").text();
+    note_content = $(this).find("p").text();
+
+    item_key = "list_" + $(this).parent().index();
+
+    data = {
+      title: note_title,
+      content: note_content
+    };
+
+    window.localStorage.setItem(item_key, JSON.stringify(data));
+  });
+
+  all_notes.each(function (index) {
+    data = JSON.parse(window.localStorage.getItem("list_" + index));
+
+    if (data !== null) {
+      note_title = data.title;
+      note_content = data.content;
+
+      $(this).find("h2").text(note_title);
+      $(this).find("p").text(note_content);
+    }
+  });
+});
+
+/*  CLOCK */
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var radius = canvas.height / 2;

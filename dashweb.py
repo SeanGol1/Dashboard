@@ -34,15 +34,14 @@ def getWord():
     wd = r.word_of_the_day()
     wordtxt = ''
     deftxt = ''
-    for items in wd:
-        if(items == 'word'):
-            wordtxt=items['word']
-            for items in 'definations':
-                if(items == 'text'):
-                    deftxt += items['text']
+    #for items in wd:
+        #wordtxt = items
+        #for definations in wd:
+            #if(items == 'text'):
+                #deftxt += definations['text']
                 
-    Word(wordtxt,deftxt)
-    return Word(wordtxt,deftxt)
+
+    return rw
 
 class NewsStory:
     def __init__(self, t, c):
