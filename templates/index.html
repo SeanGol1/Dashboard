@@ -3,7 +3,9 @@
 <head>
 <title>Dashboard</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>-->
+<script src ="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <style>
@@ -186,22 +188,25 @@ body{
         <div class="col-sm-6"> 
         <div class="border content-box">
         <h4>Tech News Headlines</h4>  
-        
+        <input type="text" id="newssearch">
+        <a href="#" id="btnSearch">Search</a>
         <div class="row">
-        
-        
+        <div id="cList"></div>
+ <!--      
+         
         <div id="technewscarousel" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
   </ol>
-  <div class="carousel-inner">
+  <div class="carousel-inner" id="cList">
       <div class="carousel-item active text-center p-4">
                 <h2>Tech News Headlines</h2>                
             </div>
+            
   
-        {% for item in newsstr[0] %}
+        {% for item in searchnews %}
             <div class="carousel-item text-center p-4">               
                 <h2 class="newshead">{{ item.title }}</h2>
                 <p>{{ item.content }}</p>                
@@ -217,7 +222,9 @@ body{
     <span class="sr-only">Next</span>
   </a>
 </div>
-        
+
+
+        -->
         
         </div>
         </div>
@@ -239,11 +246,12 @@ body{
   </ol>
   <div class="carousel-inner">
       <div class="carousel-item active">
-                <h2>Irish News Headlines</h2>                
+                <h2>News Headlines</h2>                
             </div>
   
         {% for item in newsstr[1] %}
-            <div class="carousel-item text-center p-4">               
+            <div class="carousel-item text-center p-4">  
+                <h3>{{ item.category }}</h3>
                 <h2 class="newshead">{{ item.title }}</h2>
                 <p>{{ item.content }}</p>                
             </div>
@@ -279,9 +287,38 @@ function start(){
     
 }
 
-function animate(){
-    
-}
+/* NEWS SEARCH  */
+$(function(){
+    $('#btnSearch').click(function(){
+        var txt = document.getElementById("newssearch").value;
+        $.ajax({
+            type: 'POST',
+            url: '/getNewsSearch',
+            //data: $('#newssearch').val()
+        })
+        .done(function(data){
+            $(data).forEach(function(item,index){
+                    
+                
+                var div = document.createElement("div");
+                var h2 = document.createElement("h2");
+                var p = document.createElement("p");
+                h2.innerHTML = item.title;
+                p.innerHTML = item.content;
+                //div.classList.add("carousel-item text-center p-4");
+                $(h2).after(p);
+                $(div).after(h2);
+                
+                $('#cList').append(div);
+                });
+        })
+        .fail(function(){
+        return false;
+        });
+    });
+});
+
+
 
 /*function styleDay(i){
     if(i == 2){
