@@ -18,7 +18,7 @@
     font-family: 'DS-Digital Bold';
     font-style: normal;
     font-weight: normal;
-    src: local('DS-Digital Bold'), url('DS-DIGIB.woff') format('woff');
+    src: local('DS-Digital Bold'), url('DS-DIGIB.woff'), format('woff');
     }
 
 #txtTime{
@@ -114,7 +114,12 @@ body{
 }
 
 #divfact{
-    margin-top:20px;
+    margin-top:100px;
+}
+
+a{
+    text-decoration: none;
+    color:inherit;
 }
 </style>
 
@@ -126,7 +131,7 @@ body{
 
     <div class="row">            
             
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="border content-box">
                     <h2 id="txtDay"></h2>
                     <h1 id="txtDate"></h1>
@@ -137,7 +142,7 @@ body{
                     <canvas id="canvas" width="200" height="200" style="background-color:#ededed"></canvas>
                 </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-9">
                 <div class="row">
                 <div  class="col-sm-4">  
                     <div id="openweathermap-widget-12"></div>
@@ -145,23 +150,25 @@ body{
             
                 <div class="col-sm-8">
                     <div id="divfact" class="border content-box">
-                        <h2>{{ fact[0] }}</h3>
+                        <h5>{{ fact[0] }}</h3>
                     </div>
                 </div>
                 <div class="row">
+                <div class="col-sm-8">
                     <ul id="stickynotes">
                         <li>
                             <a href="#" contenteditable>
-                            <h2 class="h2s">Word of the Day</h2>
-                            <p class="ps">{{  word }}</p>  
+                            <h4 class="h2s">Word of the Day</h4>
+                            <h3 class="ps">{{  word }}</h3>  
                             </a>
                         </li>
                         <li>
                             <a href="#" contenteditable>
-                            <h4 class="h2s">Supermac's Code: justsuper</h4> 
+                            <h4 class="h2s">Supermac's Code:</h4> 
+                            <h3>justsuper</h3> 
                             </a>
                         </li>
-                        <li>
+                     <!--   <li>
                             <a href="#" contenteditable>
                             <h2 class="h2s">To Do #3</h2>
                             <p class="ps">ToDo Item Desc</p>    
@@ -172,8 +179,18 @@ body{
                             <h2 class="h2s">To Do #3</h2>
                             <p class="ps">ToDo Item Desc</p>    
                             </a>
-                        </li>
+                        </li>  -->
                     </ul>
+                </div>
+                <div class="col-sm-4">
+                    <div class="border content-box">                   
+                    
+                    <p>{{ coun }}</p>
+                    <p>{{coun.name}}</p>
+                    
+                    
+                    </div>
+                </div>
                 </div>
                 
             
@@ -187,12 +204,8 @@ body{
     <div class="row">
         <div class="col-sm-6"> 
         <div class="border content-box">
-        <h4>Tech News Headlines</h4>  
-        <input type="text" id="newssearch">
-        <a href="#" id="btnSearch">Search</a>
         <div class="row">
-        <div id="cList"></div>
- <!--      
+   
          
         <div id="technewscarousel" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
@@ -202,14 +215,17 @@ body{
   </ol>
   <div class="carousel-inner" id="cList">
       <div class="carousel-item active text-center p-4">
-                <h2>Tech News Headlines</h2>                
+                <h2>Crypto News Headlines</h2>                
             </div>
             
   
-        {% for item in searchnews %}
-            <div class="carousel-item text-center p-4">               
-                <h2 class="newshead">{{ item.title }}</h2>
+        {% for item in newsstr[2] %}
+            <div class="carousel-item text-center p-4">  
+            <a href= '{{item.url }}' target='_blank'>
+                <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
+                </a>
                 <p>{{ item.content }}</p>                
+                
             </div>
         {% endfor %}
   </div>
@@ -224,7 +240,7 @@ body{
 </div>
 
 
-        -->
+       
         
         </div>
         </div>
@@ -232,11 +248,7 @@ body{
         
         <div class="col-sm-6">
         <div class="border content-box">
-            <h4>Irish News Headlines</h4>
             <div class="row">
-            
-            
-            
             
                     <div id="irishnewscarousel" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
@@ -251,8 +263,7 @@ body{
   
         {% for item in newsstr[1] %}
             <div class="carousel-item text-center p-4">  
-                <h3>{{ item.category }}</h3>
-                <h2 class="newshead">{{ item.title }}</h2>
+                <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
                 <p>{{ item.content }}</p>                
             </div>
         {% endfor %}
@@ -297,7 +308,8 @@ $(function(){
             //data: $('#newssearch').val()
         })
         .done(function(data){
-            $(data).forEach(function(item,index){
+            var list = JSON.parse(data);
+            $.each(list.newslist, function(index,item){
                     
                 
                 var div = document.createElement("div");
@@ -306,10 +318,11 @@ $(function(){
                 h2.innerHTML = item.title;
                 p.innerHTML = item.content;
                 //div.classList.add("carousel-item text-center p-4");
-                $(h2).after(p);
-                $(div).after(h2);
+                
                 
                 $('#cList').append(div);
+                $(div).append(h2);
+                $(div).append(p);
                 });
         })
         .fail(function(){
@@ -330,7 +343,7 @@ $(function(){
 
 function startTime(){
 
-    var days = [ 'Monday :(' , 'TWO CHICKEN TUESDAY!!' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday' ]; 
+    var days = ['Sunday' , 'Monday :(' , 'TWO CHICKEN TUESDAY!!' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday']; 
 
     var today = new Date();
     var y = today.getFullYear();
@@ -341,9 +354,11 @@ function startTime(){
     var s = today.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
+    d = checkTime(d);
+    mth = checkTime(mth);
     document.getElementById('txtTime').innerHTML = h + " : " + m + " : " + s;
     document.getElementById('txtDate').innerHTML = d + " / " + mth + " / " + y;
-    var daystr = days[(today.getDay() - 1)];
+    var daystr = days[(today.getDay())];
     document.getElementById('txtDay').innerHTML = daystr;
     var t = setTimeout(startTime,1000);
     timeDiff(today)
@@ -367,9 +382,10 @@ function timeDiff(today){
     mm = checkTime(mm);
     ss = checkTime(ss);
     
-    if(diff > 600,000)
+    if(diff < 600,000)
     {
         document.getElementById('timeAlert').classList.add("alert alert-sucess"); 
+        
     }
     
     document.getElementById('txtDiff').innerHTML = hh + " : " + mm + " : " + ss;
