@@ -129,173 +129,150 @@ a{
 </head>
 <body onload="start()">
 
-    <div class="row">            
-            
-            <div class="col-sm-3">
-                <div class="border content-box">
-                    <h2 id="txtDay"></h2>
-                    <h1 id="txtDate"></h1>
-                    <h1 id="txtTime"></h1>
-                    <div id="timeAlert">
-                        <h3 id="txtDiff"></h3>
-                    </div>
-                    <canvas id="canvas" width="200" height="200" style="background-color:#ededed"></canvas>
-                </div>
+<div class="row">
+    <div class="col-sm-4">
+
+        <div id="openweathermap-widget-12"></div>
+        <div class="col-sm-8">
+            <ul id="stickynotes">
+                <li>
+                    <a href="#" contenteditable>
+                        <h4 class="h2s">Take a Dioralyte before you die!</h4>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" contenteditable>
+                        <h4 class="h2s">Supermac's Code:</h4>
+                        <h3>justsuper</h3>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="col-sm-3">
+        <div class="border content-box">
+            <h2 id="txtDay"></h2>
+            <h1 id="txtDate"></h1>
+            <h1 id="txtTime"></h1>
+            <div id="timeAlert">
+                <h3 id="txtDiff"></h3>
             </div>
-            <div class="col-sm-9">
-                <div class="row">
-                <div  class="col-sm-4">  
-                    <div id="openweathermap-widget-12"></div>
-                </div>
-            
-                <div class="col-sm-8">
-                    <div id="divfact" class="border content-box">
-                        <h5>{{ fact[0] }}</h3>
-                    </div>
-                </div>
-                <div class="row">
-                <div class="col-sm-8">
-                    <ul id="stickynotes">
-                        <li>
-                            <a href="#" contenteditable>
-                            <h4 class="h2s">Word of the Day</h4>
-                            <h3 class="ps">{{  word }}</h3>  
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" contenteditable>
-                            <h4 class="h2s">Supermac's Code:</h4> 
-                            <h3>justsuper</h3> 
-                            </a>
-                        </li>
-                     <!--   <li>
-                            <a href="#" contenteditable>
-                            <h2 class="h2s">To Do #3</h2>
-                            <p class="ps">ToDo Item Desc</p>    
-                            </a>
-                        </li>
-                         <li>
-                            <a href="#" contenteditable>
-                            <h2 class="h2s">To Do #3</h2>
-                            <p class="ps">ToDo Item Desc</p>    
-                            </a>
-                        </li>  -->
-                    </ul>
-                </div>
-                <div class="col-sm-4">
-                    <div class="border content-box">                   
-                    
+            <canvas id="canvas" width="200" height="200" style="background-color:#ededed"></canvas>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="col-sm-8">
+            <div id="divfact" class="border content-box">
+                <h5>{{ fact[0] }}</h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="border content-box">
+
                     <p>{{ coun }}</p>
                     <p>{{coun.name}}</p>
-                    
-                    
-                    </div>
+
+
                 </div>
-                </div>
-                
-            
-                
-                </div>
-                </div>
+            </div>
+        </div>
     </div>
-            
-           
-    
-    <div class="row">
-        <div class="col-sm-6"> 
-        <div class="border content-box">
-        <div class="row">
-   
-         
-        <div id="technewscarousel" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner" id="cList">
-      <div class="carousel-item active text-center p-4">
-                <h2>Crypto News Headlines</h2>                
-            </div>
-            
-  
-        {% for item in newsstr[2] %}
-            <div class="carousel-item text-center p-4">  
-            <a href= '{{item.url }}' target='_blank'>
-                <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
-                </a>
-                <p>{{ item.content }}</p>                
-                
-            </div>
-        {% endfor %}
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+</div>
 </div>
 
 
-       
-        
-        </div>
-        </div>
-        </div>
-        
-        <div class="col-sm-6">
+
+<div class="row">
+    <div class="col-sm-6">
         <div class="border content-box">
             <div class="row">
-            
-                    <div id="irishnewscarousel" class="carousel slide" data-ride="carousel">
-  <ol class="carousel-indicators">
-    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-  </ol>
-  <div class="carousel-inner">
-      <div class="carousel-item active">
-                <h2>News Headlines</h2>                
-            </div>
-  
-        {% for item in newsstr[1] %}
-            <div class="carousel-item text-center p-4">  
-                <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
-                <p>{{ item.content }}</p>                
-            </div>
-        {% endfor %}
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-            
-            
-       
-            
-            
-            
-            
+
+
+                <div id="technewscarousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner" id="cList">
+                        <div class="carousel-item active text-center p-4">
+                            <h2>Crypto News Headlines</h2>
+                        </div>
+
+
+                        {% for item in newsstr[2] %}
+                        <div class="carousel-item text-center p-4">
+                            <a href= '{{item.url }}' target='_blank'>
+                                <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
+                            </a>
+                            <p>{{ item.content }}</p>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+
+
+
             </div>
         </div>
+    </div>
+
+    <div class="col-sm-6">
+        <div class="border content-box">
+            <div class="row">
+
+                <div id="irishnewscarousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <h2>News Headlines</h2>
+                        </div>
+
+                        {% for item in newsstr[1] %}
+                        <div class="carousel-item text-center p-4">
+                            <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
+                            <p>{{ item.content }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-    
+</div>
+
 </body>
 
 <script>
 function start(){
-    startTime();    
-    
+    startTime();
 }
 
 /* NEWS SEARCH  */

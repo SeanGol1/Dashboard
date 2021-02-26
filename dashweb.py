@@ -122,12 +122,14 @@ def getCountry():
     response = requests.get("https://restcountries.eu/rest/v2/all", json={'key':'value'})
     response = response.json()
     countries = []
+    testcountry = ""
     for items in response:
         countries.append(Country(items['name'], items['subregion'],'flag', items['capital'], 'pop' , 'tz'))
+        testcountry = items['name']
         
         
     country = countries[random.randint(0,len(countries))] 
-    return country
+    return testcountry
 
 
 if __name__ == "__main__":
