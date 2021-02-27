@@ -110,26 +110,29 @@ def searchNews():
     return json.dumps({'newslist': searchnewsList})
 
 class Country:
-    def __init__(self, t, sr, url, cap ,pop , tz):
+    def __init__(self, t, sr, url, cap ,pop , tz, latlng):
         self.title = t
         self.subregion = sr
         self.flagurl = url
         self.capital = cap
         self.population = pop
         self.timezone = tz
+        self.latlng = latlng
+        
 
 def getCountry():
     response = requests.get("https://restcountries.eu/rest/v2/all", json={'key':'value'})
     response = response.json()
     countries = []
-    testcountry = ""
+    countryitems = []
     for items in response:
-        countries.append(Country(items['name'], items['subregion'],'flag', items['capital'], 'pop' , 'tz'))
+        countries.append(Country(items['name'], items['subregion'],items['flag'], items['capital'], items['population'] , items['timezones'], items['latlng']))
         testcountry = items['name']
         
         
-    country = countries[random.randint(0,len(countries))] 
-    return testcountry
+    country = (countries[random.randint(0,len(countries))])
+    #countryitems.append(country.name)
+    return country
 
 
 if __name__ == "__main__":

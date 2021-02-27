@@ -28,14 +28,14 @@
 }
 body{
     margin: 20px;
-    color: #000000;
-    background-color: #666; /*#b1abf7;*/
+    color: #ffffff;
+    background-color: #121212; /*#666*/
     text-align: center;
 }
 .content-box{    
     padding: 10px;
     margin:5px;
-    background-color: #ededed;
+    background-color: #666;/*#ededed;*/
 
 }
 
@@ -74,11 +74,11 @@ body{
 #stickynotes li a{
   text-decoration:none;
   color:#000;
-  background:#ffc;
+  background: #bb86fc; /*#ffc;*/
   display:block;
   height:10em;
   width:10em;
-  padding:1em;
+  padding:.7em;
   box-shadow: 5px 5px 7px rgba(33,33,33,.7);
   transform: rotate(-6deg);
   transition: transform .15s linear;
@@ -110,16 +110,32 @@ body{
 }
 
 #stickynotes li{
-  margin:1em;
+  margin:.7em;
 }
 
 #divfact{
     margin-top:100px;
+    margin-left:-20px;
+}
+
+#mapdiv{
+    margin-left:50px;
 }
 
 a{
     text-decoration: none;
     color:inherit;
+}
+
+#flagimg{
+    height:100px;
+    width:150px;
+}
+
+#googleMap{
+    margin-top:10px;
+    width:250px;
+    height:250px;
 }
 </style>
 
@@ -131,9 +147,11 @@ a{
 
 <div class="row">
     <div class="col-sm-4">
-
-        <div id="openweathermap-widget-12"></div>
-        <div class="col-sm-8">
+        <div class="border content-box">
+            <div id="mapdiv">
+                <div id="openweathermap-widget-12"></div>
+            </div>
+        <div class="row">
             <ul id="stickynotes">
                 <li>
                     <a href="#" contenteditable>
@@ -148,6 +166,7 @@ a{
                 </li>
             </ul>
         </div>
+        </div>
 
     </div>
 
@@ -159,26 +178,34 @@ a{
             <div id="timeAlert">
                 <h3 id="txtDiff"></h3>
             </div>
-            <canvas id="canvas" width="200" height="200" style="background-color:#ededed"></canvas>
+            <canvas id="canvas" width="200" height="200" style="background-color:#666"></canvas>
         </div>
     </div>
-    <div class="col-sm-3">
-        <div class="col-sm-8">
-            <div id="divfact" class="border content-box">
+    <div class="col-sm-5">
+        <div class="col-sm-7">
+            <div id="divfac" class="border content-box">
                 <h5>{{ fact[0] }}</h5>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-4">
-                <div class="border content-box">
-
-                    <p>{{ coun }}</p>
-                    <p>{{coun.name}}</p>
-
-
-                </div>
-            </div>
+            <div class="border content-box">
+                <div class="row">
+                   <div class="col-sm-5">
+                       <h2>{{coun.title}}</h2>
+                       <h3>{{coun.subregion}}</h3>
+                       <h3>{{coun.capital}}</h3>
+                       <h3>{{coun.timezone}}</h3>
+                       <h3>{{coun.population}}</h3>
+                       <p id="latlng" style="visibility:none;">{{coun.latlng}}</p>
+                   </div>
+                  
+                  <div class="col-sm-7">
+                    <img id="flagimg" class="img" src="{{coun.flagurl}}">
+                    <div id="googleMap"></div>
+                  </div>
+                 </div>   
+            </div>  
         </div>
     </div>
 </div>
@@ -269,7 +296,6 @@ a{
 </div>
 
 </body>
-
 <script>
 function start(){
     startTime();
@@ -374,6 +400,27 @@ function checkTime(i){
     return i;
 
 }
+
+
+function myMap() {
+var latlng = document.getElementById("latlng").innerHTML;
+//latlng= latlng.replace('[','lat:').replace(',',',lng:').replace(']','');
+latlng= latlng.replace('[','').replace(']','');
+var s = latlng.split(",");
+var slat = parseFloat(s[0]);
+var slng = parseFloat(s[1]);
+var mapProp= {
+    
+    center: {lat: slat, lng: slng},
+    zoom:4,
+    disableDefaultUI: true,
+    zoomControl: true,
+};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+
+
+
 
 /* CAROUSEL */
 $('.carousel').carousel({
@@ -495,5 +542,6 @@ function drawHand(ctx, pos, length, width) {
 }
 
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-XLeI0f_wOHPS2zvOZZpsGkWes6nWZN0&callback=myMap"></script>
 
 </html>
