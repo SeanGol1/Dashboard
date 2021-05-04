@@ -7,6 +7,8 @@ import randfacts
 import requests
 from random_word import RandomWords
 import random
+from requests import Request, Session
+from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 
 
 app = Flask(__name__, static_folder='static', static_url_path='/static')
@@ -15,7 +17,7 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 def index():
     
     #loadPage('')
-    return render_template("index.html", coun = getCountry(), newsstr = getNews(), fact = getFact(), newscount = 0, word = getWord())
+    return render_template("index.html", coun = getCountry(), stock = getStock(), newsstr = getNews(), fact = getFact(), newscount = 0, word = getWord())
 
 def loadPage(searchData):
     
@@ -27,6 +29,44 @@ def getFact():
     rfact = [randfacts.getFact(),randfacts.getFact(),randfacts.getFact()]
     return rfact
 
+class Stock:
+    def __init__(self, n, c, day):
+        self.name = n
+        self.current = c
+        self.last24 = day
+
+def getStock:
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+    parameters = {
+        'convert': 'EUR',
+        'symbol': 'XLM'
+    }
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': '707ecde0-df8f-46e8-8d80-dca81c365419',
+    }
+
+    session = Session()
+    session.headers.update(headers)
+
+    try:
+        CryptoList = []
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+
+        for crypto in data["data"]:
+
+            _name = data["data"]["XLM"]["name"]
+            _price = data["data"]["XLM"]["quote"]["EUR"]["price"]
+            _perchange = data["data"]["XLM"]["quote"]["EUR"]["percent_change_1h"]
+            #cryptoData = {'name': _name, 'price': _price, 'perchange': _perchange}
+
+            CryptoList.append(Stock(_name,_price, _perchange));
+
+        #return json.dumps(CryptoList[0])
+        return CryptoList[0]
+    except (ConnectionError, Timeout, TooManyRedirects) as e:
+        print(e)
 
 class Word:
     def __init__(self, w, t):

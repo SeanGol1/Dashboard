@@ -41,6 +41,11 @@ body{
 
 /* CAROUSEL   */
 
+.carousel{
+    margin: 20px;
+    border: 3px solid black;
+}
+
 .carousel-item.active, .carousel-item-next, .carousel-item.-prev{
     display:block;
 }
@@ -149,8 +154,9 @@ a{
 <div class="row">
     <div class="col-sm-4">
         <div class="border content-box">
-            <div id="mapdiv">
-                <div id="openweathermap-widget-11"></div>
+            <div id="stockdiv">
+                <h1>{{stock.name}} current Price: <span>{{stock.current}}</span></h1> 
+                <h2>Last 24 Hours: {{stock.last24}}</h2>
             </div>
         <div class="row">
             <ul id="stickynotes">
@@ -217,44 +223,8 @@ a{
 <div class="row">
     <div class="col-sm-6">
         <div class="border content-box">
-            <div class="row">
-
-
-                <div id="technewscarousel" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner" id="cList">
-                        <div class="carousel-item active text-center p-4">
-                            <h2>Crypto News Headlines</h2>
-                        </div>
-
-
-                        {% for item in newsstr[2] %}
-                        <div class="carousel-item text-center p-4">
-                            <a href= '{{item.url }}' target='_blank'>
-                                <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
-                            </a>
-                            <p>{{ item.content }}</p>
-
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-
-
-
-
+            <div id="mapdiv">
+                <div id="openweathermap-widget-11"></div>
             </div>
         </div>
     </div>
@@ -290,6 +260,43 @@ a{
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+                
+                    <div id="technewscarousel" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner" id="cList">
+                            <div class="carousel-item active text-center p-4">
+                                <h2>Crypto News Headlines</h2>
+                            </div>
+    
+    
+                            {% for item in newsstr[2] %}
+                            <div class="carousel-item text-center p-4">
+                                <a href= '{{item.url }}' target='_blank'>
+                                    <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
+                                </a>
+                                <p>{{ item.content }}</p>
+    
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+    
+    
+    
+    
+                
             </div>
         </div>
     </div>
