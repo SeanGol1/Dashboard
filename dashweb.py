@@ -39,7 +39,47 @@ class Stock:
         self.last1 = hour
         self.last24 = day
 
-#@app.route("/api/getStock")
+@app.route("/api/stock")
+def apiStock():
+    #symbol = 'DOGE'
+    #symbol = 'LTC'
+    symbol = 'SHIB'
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+    parameters = {
+        'convert': 'EUR',
+        'symbol': symbol
+    }
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': '707ecde0-df8f-46e8-8d80-dca81c365419',
+    }
+
+    session = Session()
+    session.headers.update(headers)
+
+    try:
+        CryptoList = []
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+
+        for crypto in data["data"]:
+
+            _name = data["data"][symbol]["name"]
+            _price = data["data"][symbol]["quote"]["EUR"]["price"]
+            _perchange1 = data["data"][symbol]["quote"]["EUR"]["percent_change_1h"]
+            _perchange24 = data["data"][symbol]["quote"]["EUR"]["percent_change_24h"]
+            
+            #cryptoData = {'name': _name, 'price': _price, 'perchange': _perchange}
+
+            #CryptoList.append(Stock(_name,_price, _perchange1, _perchange24));
+            return jsonify(Stock(_name,_price, _perchange1, _perchange24));
+            
+        #return json.dumps(CryptoList[0])
+        return CryptoList[0]
+    except (ConnectionError, Timeout, TooManyRedirects) as e:
+        print(e)
+
+
 def getStock():
     #symbol = 'DOGE'
     #symbol = 'LTC'
