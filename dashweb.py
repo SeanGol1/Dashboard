@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-import datetime
+from datetime import datetime
 from idna import unicode
 from newsapi import NewsApiClient
 import json
@@ -17,29 +17,37 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 def index():
     
     #loadPage('')
-    return render_template("index.html", coun = getCountry(), stock = getStock(), newsstr = getNews(), fact = getFact(), newscount = 0, word = getWord())
+    return render_template("index.html", coun = getCountry(),time = getDate(), stock = getStock(), newsstr = getNews(), fact = getFact(), newscount = 0, word = getWord())
 
 def loadPage(searchData):
     
     return render_template("index.html", coun = getCountry(), newsstr = getNews(), fact = getFact(), searchnews = searchData, newscount = 0, word = getWord())
 
 
-
+def getDate():
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    return current_time
 def getFact():
     rfact = [randfacts.getFact(),randfacts.getFact(),randfacts.getFact()]
     return rfact
 
 class Stock:
-    def __init__(self, n, c, day):
+    def __init__(self, n, c,hour, day):
         self.name = n
         self.current = c
+        self.last1 = hour
         self.last24 = day
 
-def getStock:
+#@app.route("/api/getStock")
+def getStock():
+    #symbol = 'DOGE'
+    #symbol = 'LTC'
+    symbol = 'SHIB'
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
         'convert': 'EUR',
-        'symbol': 'XLM'
+        'symbol': symbol
     }
     headers = {
         'Accepts': 'application/json',
@@ -56,12 +64,14 @@ def getStock:
 
         for crypto in data["data"]:
 
-            _name = data["data"]["XLM"]["name"]
-            _price = data["data"]["XLM"]["quote"]["EUR"]["price"]
-            _perchange = data["data"]["XLM"]["quote"]["EUR"]["percent_change_1h"]
+            _name = data["data"][symbol]["name"]
+            _price = data["data"][symbol]["quote"]["EUR"]["price"]
+            _perchange1 = data["data"][symbol]["quote"]["EUR"]["percent_change_1h"]
+            _perchange24 = data["data"][symbol]["quote"]["EUR"]["percent_change_24h"]
+            
             #cryptoData = {'name': _name, 'price': _price, 'perchange': _perchange}
 
-            CryptoList.append(Stock(_name,_price, _perchange));
+            CryptoList.append(Stock(_name,_price, _perchange1, _perchange24));
 
         #return json.dumps(CryptoList[0])
         return CryptoList[0]
