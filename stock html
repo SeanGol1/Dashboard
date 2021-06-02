@@ -1,0 +1,6 @@
+      <!--<div id="stockdiv">
+                <h1>{{stock.name}} current Price: <span id="stockcurrent">{{stock.current}}</span></h1> 
+                <h3>Last Hour: <span id="stockhour">{{stock.last1}}</span></h3> 
+                <h3>Last 24 Hours: <span id="stockday">{{stock.last24}}</span></h3>
+                <!--<h3>{{time}}</h3>
+            </div>-->

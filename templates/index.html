@@ -154,29 +154,39 @@ a{
 <div class="row">
     <div class="col-sm-4">
         <div class="border content-box">
-            <div id="stockdiv">
-                <h1>{{stock.name}} current Price: <span id="stockcurrent">{{stock.current}}</span></h1> 
-                <h3>Last Hour: <span id="stockhour">{{stock.last1}}</span></h3> 
-                <h3>Last 24 Hours: <span id="stockday">{{stock.last24}}</span></h3>
-                <!--<h3>{{time}}</h3>-->
-            </div>
-        <div class="row">
-            <ul id="stickynotes">
-                <li>
-                    <a href="#" contenteditable>
-                        <h4 class="h2s">Take a Dioralyte before you die!</h4>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" contenteditable>
-                        <h4 class="h2s">Supermac's Code:</h4>
-                        <h3>justsuper</h3>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        </div>
+            <div class="row">
 
+                <div id="irishnewscarousel" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <h2>News Headlines</h2>
+                        </div>
+
+                        {% for item in newsstr[1] %}
+                        <div class="carousel-item text-center p-4">
+                        <a href= '{{item.url }}' target='_blank'>
+                            <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
+                            <p>{{ item.content }}</p>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>  
+            </div>
+        </div>
     </div>
 
     <div class="col-sm-3">
@@ -204,13 +214,13 @@ a{
                        <h2>{{coun.title}}</h2>
                        <h3>{{coun.subregion}}</h3>
                        <h3>{{coun.capital}}</h3>
-                       <h3>{{coun.timezone}}</h3>
                        <h3>{{coun.population}}</h3>
                        <p id="latlng" style="visibility:none;">{{coun.latlng}}</p>
+                         <img id="flagimg" class="img" src="{{coun.flagurl}}">
                    </div>
                   
                   <div class="col-sm-7">
-                    <img id="flagimg" class="img" src="{{coun.flagurl}}">
+                  
                     <div id="googleMap"></div>
                   </div>
                  </div>   
@@ -223,78 +233,36 @@ a{
 
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-7">
         <div class="border content-box">
-            <div id="mapdiv">
+        <div class="row">
+        <div class="col-sm-6">
+<!-- This code is issued by Magicseaweed.com under license 1622642828_92969 for the website  only subject to terms and conditions
+and this message being kept intact as part of the code. If you are not the license holder add this content to your website by registering at 
+Magicseaweed.com. All copyrights retained by Wavetrak Limited and any attempt to modify or redistribute this code is prohibited. 
+Please contact us for more information if required. -->
+<div style="width:400px;background:#fff"><script type="text/javascript" src="http://magicseaweed.com/syndicate/index.php?licenseKey=1622642828_92969"></script><p><div style="font-family:Arial, Helvetica, sans-serif;text-align:center;font-size:10px;color:#000;height:25px;"><a href="http://magicseaweed.com/Strandhill-Surf-Report/51/" style="color:#000;">Strandhill Surf Report and Forecast</a></div></p></div>
+    </div>
+    <div class="col-sm-6">
+    <!-- This code is issued by Magicseaweed.com under license 1622643122_70751 for the website  only subject to terms and conditions
+and this message being kept intact as part of the code. If you are not the license holder add this content to your website by registering at 
+Magicseaweed.com. All copyrights retained by Wavetrak Limited and any attempt to modify or redistribute this code is prohibited. 
+Please contact us for more information if required. -->
+<div style="width:400px;background:#fff; align:right"><script type="text/javascript" src="http://magicseaweed.com/syndicate/index.php?licenseKey=1622643122_70751"></script><p><div style="font-family:Arial, Helvetica, sans-serif;text-align:center;font-size:10px;color:#000;height:25px;"><a href="http://magicseaweed.com/Streedagh-Beach-Surf-Report/4751/" style="color:#000;">Streedagh Beach Surf Report and Forecast</a></div></p></div>
+    </div>
+    </div>
+    
+    
+    </div>
+    
+    </div>
+
+    <div class="col-sm-5">
+        <div class="border content-box">
+                <div id="mapdiv">
                 <div id="openweathermap-widget-11"></div>
             </div>
         </div>
-    </div>
-
-    <div class="col-sm-6">
-        <div class="border content-box">
-            <div class="row">
-
-                <div id="irishnewscarousel" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <h2>News Headlines</h2>
-                        </div>
-
-                        {% for item in newsstr[1] %}
-                        <div class="carousel-item text-center p-4">
-                            <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
-                            <p>{{ item.content }}</p>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </div>
-                
-                    <div id="technewscarousel" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        </ol>
-                        <div class="carousel-inner" id="cList">
-                            <div class="carousel-item active text-center p-4">
-                                <h2>Crypto News Headlines</h2>
-                            </div>
-    
-    
-                            {% for item in newsstr[2] %}
-                            <div class="carousel-item text-center p-4">
-                                <a href= '{{item.url }}' target='_blank'>
-                                    <h4 class="newshead">{{ item.category }} : {{ item.title }}</h4>
-                                </a>
-                                <p>{{ item.content }}</p>
-    
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
-            </div>
         </div>
     </div>
 </div>
@@ -307,7 +275,7 @@ function start(){
 }
 
 /* NEWS SEARCH  */
-$(function(){
+/*$(function(){
     $('#btnSearch').click(function(){
         var txt = document.getElementById("newssearch").value;
         $.ajax({
@@ -337,13 +305,13 @@ $(function(){
         return false;
         });
     });
-});
+});*/
 
 /*  Stock Ajax Call  */
-setTimeout(
-$(function() {
+
+/*function ajaxstock() {
     $.ajax({
-        url: '/api/info',
+        url: '/api/stock',
         success: function(data) {    
             //$('#info').html(JSON.stringify(data, null, '   '));
             $('#stockcurrent').html(data['current']);
@@ -351,9 +319,10 @@ $(function() {
 			$('#stockday').html(data['last24']);
         }
     });
-}
-, 3000);
+    setTimeout(ajaxstock, 30000);
+};/*
 
+ajaxstock();
 
 
 /*function styleDay(i){

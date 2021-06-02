@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template,jsonify
 from datetime import datetime
 from idna import unicode
 from newsapi import NewsApiClient
@@ -17,7 +17,8 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 def index():
     
     #loadPage('')
-    return render_template("index.html", coun = getCountry(),time = getDate(), stock = getStock(), newsstr = getNews(), fact = getFact(), newscount = 0, word = getWord())
+    #stock = getStock()
+    return render_template("index.html", coun = getCountry(),time = getDate(), newsstr = getNews(),  fact = getFact(), newscount = 0, word = getWord())
 
 def loadPage(searchData):
     
@@ -43,7 +44,8 @@ class Stock:
 def apiStock():
     #symbol = 'DOGE'
     #symbol = 'LTC'
-    symbol = 'SHIB'
+    #symbol = 'SHIB'
+    #symbol = 'XRP'
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
         'convert': 'EUR',
@@ -72,7 +74,7 @@ def apiStock():
             #cryptoData = {'name': _name, 'price': _price, 'perchange': _perchange}
 
             #CryptoList.append(Stock(_name,_price, _perchange1, _perchange24));
-            return jsonify(Stock(_name,_price, _perchange1, _perchange24));
+            return jsonify({"current":_price, "last1": _perchange1, "last24": _perchange24});
             
         #return json.dumps(CryptoList[0])
         return CryptoList[0]
