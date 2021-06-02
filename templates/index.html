@@ -155,7 +155,6 @@ a{
     <div class="col-sm-4">
         <div class="border content-box">
             <div class="row">
-
                 <div id="irishnewscarousel" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -163,9 +162,9 @@ a{
                         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
+                        <!--<div class="carousel-item active">
                             <h2>News Headlines</h2>
-                        </div>
+                        </div>-->
 
                         {% for item in newsstr[1] %}
                         <div class="carousel-item text-center p-4">
@@ -188,7 +187,6 @@ a{
             </div>
         </div>
     </div>
-
     <div class="col-sm-3">
         <div class="border content-box">
             <h2 id="txtDay"></h2>
@@ -215,51 +213,36 @@ a{
                        <h3>{{coun.subregion}}</h3>
                        <h3>{{coun.capital}}</h3>
                        <h3>{{coun.population}}</h3>
-                       <p id="latlng" style="visibility:none;">{{coun.latlng}}</p>
-                         <img id="flagimg" class="img" src="{{coun.flagurl}}">
+                       <!--<p id="latlng" style="visibility:none;">{{coun.latlng}}</p>-->
+                        <img id="flagimg" class="img" src="{{coun.flagurl}}">
                    </div>
                   
-                  <div class="col-sm-7">
-                  
-                    <div id="googleMap"></div>
-                  </div>
-                 </div>   
+                    <div class="col-sm-7">                  
+                        <div id="googleMap"></div>
+                    </div>
+                </div>   
             </div>  
         </div>
     </div>
 </div>
-</div>
-
-
 
 <div class="row">
     <div class="col-sm-7">
         <div class="border content-box">
-        <div class="row">
-        <div class="col-sm-6">
-<!-- This code is issued by Magicseaweed.com under license 1622642828_92969 for the website  only subject to terms and conditions
-and this message being kept intact as part of the code. If you are not the license holder add this content to your website by registering at 
-Magicseaweed.com. All copyrights retained by Wavetrak Limited and any attempt to modify or redistribute this code is prohibited. 
-Please contact us for more information if required. -->
-<div style="width:400px;background:#fff"><script type="text/javascript" src="http://magicseaweed.com/syndicate/index.php?licenseKey=1622642828_92969"></script><p><div style="font-family:Arial, Helvetica, sans-serif;text-align:center;font-size:10px;color:#000;height:25px;"><a href="http://magicseaweed.com/Strandhill-Surf-Report/51/" style="color:#000;">Strandhill Surf Report and Forecast</a></div></p></div>
-    </div>
-    <div class="col-sm-6">
-    <!-- This code is issued by Magicseaweed.com under license 1622643122_70751 for the website  only subject to terms and conditions
-and this message being kept intact as part of the code. If you are not the license holder add this content to your website by registering at 
-Magicseaweed.com. All copyrights retained by Wavetrak Limited and any attempt to modify or redistribute this code is prohibited. 
-Please contact us for more information if required. -->
-<div style="width:400px;background:#fff; align:right"><script type="text/javascript" src="http://magicseaweed.com/syndicate/index.php?licenseKey=1622643122_70751"></script><p><div style="font-family:Arial, Helvetica, sans-serif;text-align:center;font-size:10px;color:#000;height:25px;"><a href="http://magicseaweed.com/Streedagh-Beach-Surf-Report/4751/" style="color:#000;">Streedagh Beach Surf Report and Forecast</a></div></p></div>
-    </div>
-    </div>
-    
-    
-    </div>
-    
+            <div class="row">
+                <div class="col-sm-6">
+                    <div style="width:400px;background:#fff"><script type="text/javascript" src="http://magicseaweed.com/syndicate/index.php?licenseKey=1622642828_92969"></script><p><div style="font-family:Arial, Helvetica, sans-serif;text-align:center;font-size:10px;color:#000;height:25px;"><a href="http://magicseaweed.com/Strandhill-Surf-Report/51/" style="color:#000;">Strandhill Surf Report and Forecast</a></div></p></div>
+                </div>
+                <div class="col-sm-6">
+                    <div style="width:400px;background:#fff"><script type="text/javascript" src="http://magicseaweed.com/syndicate/index.php?licenseKey=1622643122_70751"></script><p><div style="font-family:Arial, Helvetica, sans-serif;text-align:center;font-size:10px;color:#000;height:25px;"><a href="http://magicseaweed.com/Streedagh-Beach-Surf-Report/4751/" style="color:#000;">Streedagh Beach Surf Report and Forecast</a></div></p></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="col-sm-5">
         <div class="border content-box">
-                <div id="mapdiv">
+            <div id="mapdiv">
                 <div id="openweathermap-widget-11"></div>
             </div>
         </div>
@@ -274,38 +257,6 @@ function start(){
     startTime();
 }
 
-/* NEWS SEARCH  */
-/*$(function(){
-    $('#btnSearch').click(function(){
-        var txt = document.getElementById("newssearch").value;
-        $.ajax({
-            type: 'POST',
-            url: '/getNewsSearch',
-            //data: $('#newssearch').val()
-        })
-        .done(function(data){
-            var list = JSON.parse(data);
-            $.each(list.newslist, function(index,item){
-                    
-                
-                var div = document.createElement("div");
-                var h2 = document.createElement("h2");
-                var p = document.createElement("p");
-                h2.innerHTML = item.title;
-                p.innerHTML = item.content;
-                //div.classList.add("carousel-item text-center p-4");
-                
-                
-                $('#cList').append(div);
-                $(div).append(h2);
-                $(div).append(p);
-                });
-        })
-        .fail(function(){
-        return false;
-        });
-    });
-});*/
 
 /*  Stock Ajax Call  */
 
@@ -331,7 +282,11 @@ ajaxstock();
         txt.style.color = "Red";
     }
 }*/
+var myVar = setInterval(myTimer, 43200000);
 
+function myTimer() {
+    location.reload();
+}
 
 function startTime(){
 
@@ -416,8 +371,11 @@ $('.carousel').carousel({
     interval:20000
 })
 
-/*  STICKY NOTES  */
+$( ".carousel-inner div:first-child" ).addClass('active');
 
+
+/*  STICKY NOTES  */
+/*
 $(document).ready(function () {
   all_notes = $("li a");
 
@@ -447,7 +405,7 @@ $(document).ready(function () {
     }
   });
 });
-
+*/
 /*  CLOCK */
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
