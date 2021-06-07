@@ -4,6 +4,7 @@ from idna import unicode
 from newsapi import NewsApiClient
 import json
 import randfacts
+import tmdbsimple as tmdb
 import requests
 from random_word import RandomWords
 import random
@@ -18,12 +19,47 @@ def index():
     
     #loadPage('')
     #stock = getStock()
-    return render_template("index.html", coun = getCountry(),time = getDate(), newsstr = getNews(),  fact = getFact(), newscount = 0, word = getWord())
+    return render_template("index.html", coun = getCountry(),tvguide = getTVGuide(), time = getDate(), newsstr = getNews(),  fact = getFact(), newscount = 0, word = getWord())
 
 def loadPage(searchData):
     
     return render_template("index.html", coun = getCountry(), newsstr = getNews(), fact = getFact(), searchnews = searchData, newscount = 0, word = getWord())
 
+def getTVGuide():
+    data_fetch = True
+    pages = ['&page=1', '&page=2', '&page=3']
+    count = 0
+    todays_shows = []
+    our_shows = []
+    favourites = ['Superman & Lois', 'Emmerdale', 'WWE Raw','The Good Doctor']
+
+    for items in pages:
+
+        if count >= 3:
+            break
+        
+        page_number = pages[0]
+
+        tmdb.api_key = "74d5287b6bd749f76603010fdcf24585"   
+        url = "https://api.themoviedb.org/3/tv/airing_today?api_key=74d5287b6bd749f76603010fdcf24585&language=en-US"+str(items)
+        count += 1
+
+
+        request = requests.get(url)
+        json = request.json()
+           
+        for i in json.get('results'):
+            y = i["name"]
+            if y in favourites:
+                todays_shows.append(y)
+
+      
+    return todays_shows
+        
+    
+    
+    
+    
 
 def getDate():
     now = datetime.now()
