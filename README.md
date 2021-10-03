@@ -25,6 +25,20 @@ Altogether, I wanted a neat place for all the info to be displayed while also ge
 
 # Setup
 
+## Equipment used
+* Raspberry Pi 3
+* Small TV / PC Monitor
+
+## Install packages
+
+* Raspbian (OS for Raspberry Pi)
+ https://www.raspberrypi.org/software/operating-systems/
+* Python (Framework)
+ https://www.python.org/downloads/
+* Flask (library to run on web)
+ https://flask.palletsprojects.com/en/2.0.x/
+
+
 # Technologies 
 ### Front End 
 The base language used for design is HTML and CSS.
