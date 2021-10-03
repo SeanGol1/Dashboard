@@ -207,7 +207,11 @@ a{
 
         <div class="row">
             <div class="border content-box">
-                <div class="row">                
+            
+            
+            
+            <!--   GOLD LEADERBOARD    -->
+               <!-- <div class="row">                
                     <div class="col-sm-6">
                         <div class="border content-box">
                             <h2>Golf Leaderboard</h2>
@@ -229,12 +233,14 @@ a{
                             {% endif %}
                         </div>
                     </div>
-               </div>
+                    
+                    
+               </div>-->
                 
                 
                 
                 <!--  COUNTRY AND MAP -->
-                <!--<div class="row">
+                <div class="row">
                    <div class="col-sm-5">
                        <h2>{{coun.title}}</h2>
                        <h3>{{coun.subregion}}</h3>
@@ -246,7 +252,7 @@ a{
                     <div class="col-sm-7">                  
                         <div id="googleMap"></div>
                     </div>
-                </div>-->
+                </div>
                 
                 
                 
@@ -285,7 +291,7 @@ a{
             <div class="row">
                 <div class="col-sm-6">
                     <div id="tvdiv">
-                    <h2>Today's TV Listings</h2> 
+                    <h2>This Week's TV Listings</h2> 
                     {% if tvguide != false %}
                         {% for item in tvguide %}
                             <h3>{{item}}</h3>
@@ -293,10 +299,7 @@ a{
                     {% endif %}
                        
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <h2>Upcoming... devon??</h2>
-                </div>
+                </div>                
             </div>
         </div>
         
