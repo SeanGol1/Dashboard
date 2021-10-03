@@ -207,7 +207,34 @@ a{
 
         <div class="row">
             <div class="border content-box">
-                <div class="row">
+                <div class="row">                
+                    <div class="col-sm-6">
+                        <div class="border content-box">
+                            <h2>Golf Leaderboard</h2>
+                            {% if golfLeader != False %}
+                                {% for item in golfLeader %}
+                                    <h4>{{item}}</h4>
+                                {% endfor %}
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="border content-box">
+                            <h2>Golf Schedule</h2>
+                            {% if golfSchedule != False %}
+                            {% for item in golfSchedule %}
+                                    <h3>{{item}}</h3>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+               </div>
+                
+                
+                
+                <!--  COUNTRY AND MAP -->
+                <!--<div class="row">
                    <div class="col-sm-5">
                        <h2>{{coun.title}}</h2>
                        <h3>{{coun.subregion}}</h3>
@@ -219,7 +246,12 @@ a{
                     <div class="col-sm-7">                  
                         <div id="googleMap"></div>
                     </div>
-                </div>   
+                </div>-->
+                
+                
+                
+                
+                
             </div>  
         </div>
     </div>
@@ -254,9 +286,11 @@ a{
                 <div class="col-sm-6">
                     <div id="tvdiv">
                     <h2>Today's TV Listings</h2> 
+                    {% if tvguide != false %}
                         {% for item in tvguide %}
                             <h3>{{item}}</h3>
                         {% endfor %}
+                    {% endif %}
                        
                     </div>
                 </div>
@@ -306,7 +340,7 @@ ajaxstock();
 }*/
 
 //   refresh page every hour  
-var myVar = setInterval(myTimer, 3600000);
+var myVar = setInterval(myTimer, 21600000);
 
 function myTimer() {
     location.reload();
@@ -369,7 +403,7 @@ function checkTime(i){
 
 }
 
-
+/*
 function myMap() {
 var latlng = document.getElementById("latlng").innerHTML;
 //latlng= latlng.replace('[','lat:').replace(',',',lng:').replace(']','');
@@ -386,6 +420,7 @@ var mapProp= {
 };
 var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 }
+*/
 
 
 
