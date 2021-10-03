@@ -34,8 +34,8 @@ def index():
         
     #loadPage('')
     #stock = getStock()
-    #golfLeader = getGolfLeaderboard(),golfSchedule = getGolfSchedule(),
-    return render_template("index.html", coun = getCountry(),tvguide = _tvguide, time = getDate(),golfLeader = _golfLeader,golfSchedule = _golfSchedule, newsstr = getNews(),  fact = getFact(), newscount = 0)
+    #golfLeader = getGolfLeaderboard(),coun = getCountry(),golfSchedule = getGolfSchedule()_golfSchedule
+    return render_template("index.html",tvguide = _tvguide, coun = getCountry(), time = getDate(),golfLeader = _GolfLeaderboard,golfSchedule = _golfSchedule, newsstr = getNews(),  fact = getFact(), newscount = 0)
 
 def getGolfLeaderboard():
     url = "https://golf-leaderboard-data.p.rapidapi.com/tour-rankings/2/2021"
@@ -46,24 +46,26 @@ def getGolfLeaderboard():
         }
 
     #response2 = requests.request("GET", url2, headers=headers)
+    try:
+        request = requests.get(url, headers=headers)
+        dict = request.json()
+        count = 0
+        leaderboard = []
+        leaders = ''
 
-    request = requests.get(url, headers=headers)
-    dict = request.json()
-    count = 0
-    leaderboard = []
-    leaders = ''
-
-    dict1= dict.get('results')   
-    for i in dict1.get('rankings'):
-        if count < 10:
-            name = i['player_name']
-            position = i['position']
-            leaderboard.append(name)
-            leaders += 'Position '+str(position)+':\n'+name+'\n' 
-            count += 1 
-        else:
-            break
-     
+        dict1= dict.get('results')   
+        for i in dict1.get('rankings'):
+            if count < 10:
+                name = i['player_name']
+                position = i['position']
+                leaderboard.append(name)
+                leaders += 'Position '+str(position)+':\n'+name+'\n' 
+                count += 1 
+            else:
+                break
+    except:
+        #if upcoming_list.count() == 0:
+        leaderboard = ["Nothing this week :("]
             
 
     return leaderboard   #for raspberry pi
@@ -91,32 +93,37 @@ def getGolfSchedule():
     json = request.json()
     #json = list(json)
 
-    for i in json.get('results'):
-        if count >= 3:
-            break
-        name = i["name"]
-        course = i["course"]
-        country = i["country"]
-        starting = i["start_date"]
-        ending = i["end_date"]
-        prize = i["prize_fund"]
-        datecheck = [now.year, now.month, now.day] 
-        datecheck2 = starting.split(' ')
-        datecheck2.pop(1)
-        datecheck2 = datecheck2[0].split('-')
-        starting1 = datetime.datetime(int(datecheck2[0]), int(datecheck2[1]), int(datecheck2[2]))
-        now1 = datetime.datetime(int(datecheck[0]), int(datecheck[1]), int(datecheck[2]))
-        comp = 1
-       
-        if starting1 < now1:
-            continue
-          
-        else:
-            upcoming += 'Upcoming Golf Tournaments\n' 'Name: '+name+ '\nCountry: '+country+ '\nStarting on: '+starting+ '\nPrize money: '+prize+'\n'
-            upcoming_list.append(name)
-        count += 1 
+    try:
+        for i in json.get('results'):
+            if count >= 3:
+                break
+            name = i["name"]
+            course = i["course"]
+            country = i["country"]
+            starting = i["start_date"]
+            ending = i["end_date"]
+            prize = i["prize_fund"]
+            datecheck = [now.year, now.month, now.day] 
+            datecheck2 = starting.split(' ')
+            datecheck2.pop(1)
+            datecheck2 = datecheck2[0].split('-')
+            starting1 = datetime.datetime(int(datecheck2[0]), int(datecheck2[1]), int(datecheck2[2]))
+            now1 = datetime.datetime(int(datecheck[0]), int(datecheck[1]), int(datecheck[2]))
+            comp = 1
+           
+            if starting1 < now1:
+                continue
+              
+            else:
+                upcoming += 'Upcoming Golf Tournaments\n' 'Name: '+name+ '\nCountry: '+country+ '\nStarting on: '+starting+ '\nPrize money: '+prize+'\n'
+                upcoming_list.append(name)
+            count += 1 
 
-    #print (upcoming)        #for laoptop
+    
+    except:
+        #if upcoming_list.count() == 0:
+        upcoming_list = ["Nothing this week :("]
+        
     return upcoming_list   #for raspberry pi
 
 
@@ -124,7 +131,7 @@ def getTVGuide():
     pages = ['&page=1','&page=2', '&page=3', '&page=4', '&page=5']
     upcoming = []
     thisweek = ''
-    favourites = ['Rick & Morty', 'Superman & Lois', 'Greys Anatomy', 'Legacies', 'Loki', "DC's legends of tomorrow", 'The Flash', 'Clarksons Farm', "America's Got Talent", 'The voice']
+    favourites = ['Rick & Morty','The Great British Bake Off', 'The Walking Dead' , 'Superman & Lois','Blue Bloods', 'Greys Anatomy', 'The Good Doctor' , 'Legacies', 'Loki', "DC's legends of tomorrow", 'The Flash', 'Clarksons Farm', "America's Got Talent", 'The Voice']
 
 
     for items in pages:
@@ -335,4 +342,4 @@ def getCountry():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host = "127.0.0.1", port = 5001)
