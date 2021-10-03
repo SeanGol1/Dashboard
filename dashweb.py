@@ -6,7 +6,7 @@ import json
 import randfacts
 import tmdbsimple as tmdb
 import requests
-from random_word import RandomWords
+#from random_word import RandomWords
 import random
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
@@ -17,48 +17,134 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 @app.route('/')
 def index():
     
+    _golfLeader = False
+    _golfSchedule = False
+    _coun = False
+    _tvguide = True
+    _time = False
+    _newstr = True
+    _newsCount = False
+    
+    
+    if _golfLeader == True:
+        _golfLeader = getGolfLeaderboard()
+        _golfSchedule = getGolfSchedule()
+    if _tvguide == True:
+        _tvguide = getTVGuide()
+        
     #loadPage('')
     #stock = getStock()
-    return render_template("index.html", coun = getCountry(),tvguide = getTVGuide(), time = getDate(), newsstr = getNews(),  fact = getFact(), newscount = 0, word = getWord())
+    #golfLeader = getGolfLeaderboard(),golfSchedule = getGolfSchedule(),
+    return render_template("index.html", coun = getCountry(),tvguide = _tvguide, time = getDate(),golfLeader = _golfLeader,golfSchedule = _golfSchedule, newsstr = getNews(),  fact = getFact(), newscount = 0)
 
-def loadPage(searchData):
-    
-    return render_template("index.html", coun = getCountry(), newsstr = getNews(), fact = getFact(), searchnews = searchData, newscount = 0, word = getWord())
+def getGolfLeaderboard():
+    url = "https://golf-leaderboard-data.p.rapidapi.com/tour-rankings/2/2021"
+
+    headers = {
+        'x-rapidapi-key': "6e6c8988edmsh9dde74a11f1bfa3p18e7b1jsnab2498895645",
+        'x-rapidapi-host': "golf-leaderboard-data.p.rapidapi.com"
+        }
+
+    #response2 = requests.request("GET", url2, headers=headers)
+
+    request = requests.get(url, headers=headers)
+    dict = request.json()
+    count = 0
+    leaderboard = []
+    leaders = ''
+
+    dict1= dict.get('results')   
+    for i in dict1.get('rankings'):
+        if count < 10:
+            name = i['player_name']
+            position = i['position']
+            leaderboard.append(name)
+            leaders += 'Position '+str(position)+':\n'+name+'\n' 
+            count += 1 
+        else:
+            break
+     
+            
+
+    return leaderboard   #for raspberry pi
+    #print (leaders)       # for laptop
+
+
+def getGolfSchedule():
+    import datetime
+    upcoming = ''
+    upcoming_list = []
+    now = datetime.datetime.now()
+    count = 0
+
+
+    url = "https://golf-leaderboard-data.p.rapidapi.com/fixtures/2/2021"
+
+    headers = {
+        'x-rapidapi-key': "6e6c8988edmsh9dde74a11f1bfa3p18e7b1jsnab2498895645",
+        'x-rapidapi-host': "golf-leaderboard-data.p.rapidapi.com"
+        }
+
+
+
+    request = requests.get(url, headers=headers)
+    json = request.json()
+    #json = list(json)
+
+    for i in json.get('results'):
+        if count >= 3:
+            break
+        name = i["name"]
+        course = i["course"]
+        country = i["country"]
+        starting = i["start_date"]
+        ending = i["end_date"]
+        prize = i["prize_fund"]
+        datecheck = [now.year, now.month, now.day] 
+        datecheck2 = starting.split(' ')
+        datecheck2.pop(1)
+        datecheck2 = datecheck2[0].split('-')
+        starting1 = datetime.datetime(int(datecheck2[0]), int(datecheck2[1]), int(datecheck2[2]))
+        now1 = datetime.datetime(int(datecheck[0]), int(datecheck[1]), int(datecheck[2]))
+        comp = 1
+       
+        if starting1 < now1:
+            continue
+          
+        else:
+            upcoming += 'Upcoming Golf Tournaments\n' 'Name: '+name+ '\nCountry: '+country+ '\nStarting on: '+starting+ '\nPrize money: '+prize+'\n'
+            upcoming_list.append(name)
+        count += 1 
+
+    #print (upcoming)        #for laoptop
+    return upcoming_list   #for raspberry pi
+
 
 def getTVGuide():
-    data_fetch = True
-    pages = ['&page=1', '&page=2', '&page=3']
-    count = 0
-    todays_shows = []
-    our_shows = []
-    favourites = ['Superman & Lois', 'Emmerdale', 'WWE Raw','The Good Doctor']
+    pages = ['&page=1','&page=2', '&page=3', '&page=4', '&page=5']
+    upcoming = []
+    thisweek = ''
+    favourites = ['Rick & Morty', 'Superman & Lois', 'Greys Anatomy', 'Legacies', 'Loki', "DC's legends of tomorrow", 'The Flash', 'Clarksons Farm', "America's Got Talent", 'The voice']
+
 
     for items in pages:
 
-        if count >= 3:
-            break
+        url2 = "https://api.themoviedb.org/3/tv/on_the_air?api_key=74d5287b6bd749f76603010fdcf24585&language=en-US"+str(items)
+     
+        request2 = requests.get(url2)
+        dict = request2.json()
         
-        page_number = pages[0]
-
-        tmdb.api_key = "74d5287b6bd749f76603010fdcf24585"   
-        url = "https://api.themoviedb.org/3/tv/airing_today?api_key=74d5287b6bd749f76603010fdcf24585&language=en-US"+str(items)
-        count += 1
-
-
-        request = requests.get(url)
-        json = request.json()
-           
-        for i in json.get('results'):
+        for i in dict.get('results'):
             y = i["name"]
             if y in favourites:
-                todays_shows.append(y)
+                upcoming.append(y)
+                thisweek += y +'\n'
 
-      
-    return todays_shows
+    
+    return upcoming
         
-    
-    
-    
+        
+        
     
 
 def getDate():
@@ -161,21 +247,6 @@ class Word:
         self.word = w
         self.text = t    
 
-def getWord():
-    r = RandomWords()
-    
-    rw = r.get_random_word()
-    wd = r.word_of_the_day()
-    wordtxt = ''
-    deftxt = ''
-    #for items in wd:
-        #wordtxt = items
-        #for definations in wd:
-            #if(items == 'text'):
-                #deftxt += definations['text']
-                
-
-    return rw
 
 class NewsStory:
     def __init__(self, t, c, u, cat):
