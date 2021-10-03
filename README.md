@@ -1,4 +1,7 @@
-# Dashboard
+# Dashboard!
+
+[2021-10-03-161802_1824x984_scrot](https://user-images.githubusercontent.com/14328800/135761042-f5d61b00-663a-4ced-8ce3-3d6027d719e6.png)
+
 General use Dashboard build with HTML, JavaScript + Python and is run on a Raspberry Pi 3.
 
 
